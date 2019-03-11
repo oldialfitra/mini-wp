@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mini WordPress</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js'></script>
+    <script src="./main.js"></script>
+</head>
+
+<body>
+    <div id="all">
+        <div class="container col-sm-12">
+            <div class="row">
+                <nav class="navbar">
+                    <div class="navbarlogo">
+                        <a href="#" onclick="listArticle()"><i class="fab fa-wordpress-simple" style="color: floralwhite"></i></a>
+                    </div>
+                    <div class="content">
+                        <h1>PressWord</h1>
+                    </div>
+                    <div class="media">
+                        <div class="media1 col-sm-6">
+                            <a href="#"><i class="far fa-edit" style="color: floralwhite"></i></a>
+                        </div>
+                        <div class="media2 col-sm-6">
+                            <a href="#"><i class="far fa-user" style="color: floralwhite"></i></a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="col-md-3">
+                <nav id="sidebar">
+                    <div class="sidebar-search">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0 bg-light" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="#" onclick="listArticle()">List</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="addArticle()">Add Article</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-9">
+                <div class="list">
+                    <h2>List of Articles</h2>
+                    <div class="card" style="max-width:80%;">
+                        <div class="card-body">
+                            <p><strong>The Journey Begins</strong><br>Ini list articles</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="add">
+                    <h2>Add Article</h2>
+                    <div id="froala-editor">
+                        <p></p>
+                    </div>
+                    <br/>
+                    <div id="preview" class="fr-view">
+                        <p></p>
+                    </div>
+                    <script>
+                        $(function() {
+                            $('div#froala-editor').froalaEditor()
+                                .on('froalaEditor.contentChanged', function(e, editor) {
+                                    $('#preview').html(editor.html.get());
+                                    console.log(editor.html.get())
+                                })
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    &copy; Copyright 2019 Lalu Oldi Alfitra
+</footer>
+
+</html>
