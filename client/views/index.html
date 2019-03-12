@@ -6,23 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mini WordPress</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js'></script>
-    <script src="./main.js"></script>
+
+
 </head>
 
 <body>
-    <div id="all">
+    <div id="app">
         <div class="container col-sm-12">
             <div class="row">
                 <nav class="navbar">
                     <div class="navbarlogo">
-                        <a href="#" onclick="listArticle()"><i class="fab fa-wordpress-simple" style="color: floralwhite"></i></a>
+                        <a href="#"><i class="fab fa-wordpress-simple" style="color: floralwhite"></i></a>
                     </div>
                     <div class="content">
                         <h1>PressWord</h1>
@@ -49,26 +52,68 @@
                     </div>
                     <ul class="list-unstyled components">
                         <li>
-                            <a href="#" onclick="listArticle()">List</a>
+                            <a href="#" v-on:click="showListArticle">List</a>
                         </li>
                         <li>
-                            <a href="#" onclick="addArticle()">Add Article</a>
+                            <a href="#" v-on:click="showAddArticle">Add Article</a>
                         </li>
                     </ul>
                 </nav>
             </div>
             <div class="col-md-9">
-                <div class="list">
+                <div class="list" v-if="seenList">
                     <h2>List of Articles</h2>
-                    <div class="card" style="max-width:80%;">
-                        <div class="card-body">
-                            <p><strong>The Journey Begins</strong><br>Ini list articles</p>
-                        </div>
+
+                    <div class="card" style="max-width:80%" v-for="(item, index) in articles">
+                        <!-- <div class="card-body">
+                            <p>{{article}}</p>
+                        </div> -->
+                        <span style="color:black;font-weight:bolda;text-align:center;border-bottom: double;">{{item.title}}</span>
+                        <!-- <h3><strong></strong></h3> -->
+                        <span style="color:black;font-weight:normal">{{item.content}}</span>
+                        <span style="color:black;font-weight:lighter;">{{item.created_at.slice(0, 10)}}</span>
+                        <button v-on:click="getOneArticle(item._id)"><i class="fas fa-pen" ></i></button>
+                        <button v-on:click="deleteArticle(item._id, index)"><i class="fas fa-trash-alt"></i></button>
+
+                        <!-- <a href="#" v-on:click="getOneArticle(item._id)"></a> -->
+                        <!-- <a href="#" v-on:click.prevent="deleteArticle(item._id)"></a> -->
                     </div>
                 </div>
-                <div class="add">
+                <div class="update" v-if="seenUpdate">
+                    <h2>Update Article</h2>
+                    <form v-on:submit.prevent="updateArticle(item._id)">
+                        <input v-model="updateTitle" placeholder="Title"><br>
+                        <textarea v-model="updateContent" placeholder="Content" rows="10px" cols="30px"></textarea><br>
+                        <br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <!-- <div id="froala-editor">
+                                <p></p>
+                            </div>
+                            <br/>
+                            <div id="preview" class="fr-view">
+                                <p></p>
+                            </div>
+                            <script>
+                                $(function() {
+                                    $('div#froala-editor').froalaEditor()
+                                        .on('froalaEditor.contentChanged', function(e, editor) {
+                                            $('#preview').html(editor.html.get());
+                                            console.log(editor.html.get())
+                                        })
+                                });
+                            </script> -->
+                </div>
+
+                <div class="add" v-if="seenAdd">
                     <h2>Add Article</h2>
-                    <div id="froala-editor">
+                    <form v-on:submit.prevent="addArticle">
+                        <input v-model="articleTitle" placeholder="Title" class="form-control"><br>
+                        <textarea v-model="articleContent" placeholder="Content" rows="10px" cols="30px" class="form-control"></textarea><br>
+                        <br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <!-- <div id="froala-editor">
                         <p></p>
                     </div>
                     <br/>
@@ -83,11 +128,12 @@
                                     console.log(editor.html.get())
                                 })
                         });
-                    </script>
+                    </script> -->
                 </div>
             </div>
         </div>
     </div>
+    <script src="./js/main.js"></script>
 </body>
 <footer>
     &copy; Copyright 2019 Lalu Oldi Alfitra
