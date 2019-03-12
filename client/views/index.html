@@ -15,8 +15,6 @@
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js'></script>
-
-
 </head>
 
 <body>
@@ -63,20 +61,12 @@
             <div class="col-md-9">
                 <div class="list" v-if="seenList">
                     <h2>List of Articles</h2>
-
                     <div class="card" style="max-width:80%" v-for="(item, index) in articles">
-                        <!-- <div class="card-body">
-                            <p>{{article}}</p>
-                        </div> -->
                         <span style="color:black;font-weight:bolda;text-align:center;border-bottom: double;">{{item.title}}</span>
-                        <!-- <h3><strong></strong></h3> -->
                         <span style="color:black;font-weight:normal">{{item.content}}</span>
                         <span style="color:black;font-weight:lighter;">{{item.created_at.slice(0, 10)}}</span>
                         <button v-on:click="getOneArticle(item._id)"><i class="fas fa-pen" ></i></button>
                         <button v-on:click="deleteArticle(item._id, index)"><i class="fas fa-trash-alt"></i></button>
-
-                        <!-- <a href="#" v-on:click="getOneArticle(item._id)"></a> -->
-                        <!-- <a href="#" v-on:click.prevent="deleteArticle(item._id)"></a> -->
                     </div>
                 </div>
                 <div class="update" v-if="seenUpdate">
@@ -87,24 +77,7 @@
                         <br><br>
                         <input type="submit" value="Submit">
                     </form>
-                    <!-- <div id="froala-editor">
-                                <p></p>
-                            </div>
-                            <br/>
-                            <div id="preview" class="fr-view">
-                                <p></p>
-                            </div>
-                            <script>
-                                $(function() {
-                                    $('div#froala-editor').froalaEditor()
-                                        .on('froalaEditor.contentChanged', function(e, editor) {
-                                            $('#preview').html(editor.html.get());
-                                            console.log(editor.html.get())
-                                        })
-                                });
-                            </script> -->
                 </div>
-
                 <div class="add" v-if="seenAdd">
                     <h2>Add Article</h2>
                     <form v-on:submit.prevent="addArticle">
@@ -113,22 +86,6 @@
                         <br><br>
                         <input type="submit" value="Submit">
                     </form>
-                    <!-- <div id="froala-editor">
-                        <p></p>
-                    </div>
-                    <br/>
-                    <div id="preview" class="fr-view">
-                        <p></p>
-                    </div>
-                    <script>
-                        $(function() {
-                            $('div#froala-editor').froalaEditor()
-                                .on('froalaEditor.contentChanged', function(e, editor) {
-                                    $('#preview').html(editor.html.get());
-                                    console.log(editor.html.get())
-                                })
-                        });
-                    </script> -->
                 </div>
             </div>
         </div>
