@@ -11,5 +11,4 @@ router.put('/:id', controllerArticle.updateArticle)
 
 router.get('/:id', controllerArticle.getOne)
 
-
 module.exports = router

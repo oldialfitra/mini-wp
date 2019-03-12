@@ -78,7 +78,6 @@ let app = new Vue({
                     console.log(err)
                 })
         },
-
         getOneArticle(id) {
             axios.get(`${url}/${id}`)
                 .then(({ data }) => {
