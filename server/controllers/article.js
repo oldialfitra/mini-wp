@@ -1,13 +1,16 @@
 const article = require('../models/article')
-const jwt = require('jsonwebtoken')
 
 class Article {
 
     static addArticle(req, res) {
+        console.log('add')
+        console.log(req.file)
         article.create({
                 title: req.body.title,
                 content: req.body.content,
-                created_at: new Date()
+                created_at: new Date(),
+                image: req.file.cloudStoragePublicUrl,
+                userId: req.body.userId
             })
             .then(function(newArticle) {
                 res.status(201).json(newArticle)
@@ -18,9 +21,13 @@ class Article {
     }
 
     static getArticle(req, res) {
-        article.find()
+        // console.log("kkkkkkmo=================");
+        // console.log(req.headers)
+        article.find().populate('userId')
             .then(function(articles) {
-                res.status(200).json(articles)
+                console.log(articles)
+                articles.reverse()
+                res.status(200).json(articles.reverse())
             })
             .catch(function(err) {
                 res.status(500).json(err)

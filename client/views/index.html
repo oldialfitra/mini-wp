@@ -9,87 +9,71 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./vueWysiwyg.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@2.9.3/js/froala_editor.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 </head>
 
 <body>
     <div id="app">
+        <!-- <div class="container col-sm-12">
+            <div class="row">
+                <sign-in v-if='seenLogin' @user-login="login" @change-register="showRegisterUser"></sign-in> -->
+        <!-- <div class="login" v-if="seenLogin">
+                    <h2>Login</h2>
+                    <form v-on:submit.prevent="login()">
+                        <input v-model="userEmail" placeholder="Email" type="email"><br>
+                        <input v-model="userPassword" placeholder="Password" type="password"><br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <span>Need new account? <a href="#" v-on:click="showRegisterUser">Register</a></span>
+                </div> -->
+
+        <!-- <sign-up v-if=seenRegister @user-register="register" @change-login="showLoginUser"></sign-up> -->
+
+        <!-- <div class="register" v-if="seenRegister">
+                    <h2>Register</h2>
+                    <form v-on:submit.prevent="register()">
+                        <input v-model="userEmail" placeholder="Email" type="email"><br>
+                        <input v-model="userPassword" placeholder="Password" type="password"><br><br>
+                        <input type="submit" value="Submit">
+                    </form>
+                    <span>Already have account? <a href="#" v-on:click="showLoginUser">Login</a></span>
+                </div> -->
+        <!-- </div>
+        </div> -->
         <div class="container col-sm-12">
             <div class="row">
-                <nav class="navbar">
-                    <div class="navbarlogo">
-                        <a href="#"><i class="fab fa-wordpress-simple" style="color: floralwhite"></i></a>
-                    </div>
-                    <div class="content">
-                        <h1>PressWord</h1>
-                    </div>
-                    <div class="media">
-                        <div class="media1 col-sm-6">
-                            <a href="#"><i class="far fa-edit" style="color: floralwhite"></i></a>
-                        </div>
-                        <div class="media2 col-sm-6">
-                            <a href="#"><i class="far fa-user" style="color: floralwhite"></i></a>
-                        </div>
-                    </div>
-                </nav>
+                <sign-in v-if='seenLogin' @user-login="login" @change-register="showRegisterUser"></sign-in>
+                <sign-up v-if=seenRegister @user-register="register" @change-login="showLoginUser"></sign-up>
+                <nav-bar v-if="seenNavBar" @user-logout="logout"></nav-bar>
             </div>
         </div>
         <div class="d-flex">
-            <div class="col-md-3">
-                <nav id="sidebar">
-                    <div class="sidebar-search">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0 bg-light" type="submit">Search</button>
-                        </form>
-                    </div>
-                    <ul class="list-unstyled components">
-                        <li>
-                            <a href="#" v-on:click="showListArticle">List</a>
-                        </li>
-                        <li>
-                            <a href="#" v-on:click="showAddArticle">Add Article</a>
-                        </li>
-                    </ul>
-                </nav>
+            <div class="col-sm-3">
+                <side-bar v-if="seenSideBar" @change-list="showListArticle" @change-add="showAddArticle"></side-bar>
             </div>
-            <div class="col-md-9">
-                <div class="list" v-if="seenList">
-                    <h2>List of Articles</h2>
-                    <div class="card" style="max-width:80%" v-for="(item, index) in articles">
-                        <span style="color:black;font-weight:bolda;text-align:center;border-bottom: double;">{{item.title}}</span>
-                        <span style="color:black;font-weight:normal">{{item.content}}</span>
-                        <span style="color:black;font-weight:lighter;">{{item.created_at.slice(0, 10)}}</span>
-                        <button v-on:click="getOneArticle(item._id)"><i class="fas fa-pen" ></i></button>
-                        <button v-on:click="deleteArticle(item._id, index)"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-                </div>
-                <div class="update" v-if="seenUpdate">
-                    <h2>Update Article</h2>
-                    <form v-on:submit.prevent="updateArticle(item._id)">
-                        <input v-model="updateTitle" placeholder="Title"><br>
-                        <textarea v-model="updateContent" placeholder="Content" rows="10px" cols="30px"></textarea><br>
-                        <br><br>
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
-                <div class="add" v-if="seenAdd">
-                    <h2>Add Article</h2>
-                    <form v-on:submit.prevent="addArticle">
-                        <input v-model="articleTitle" placeholder="Title" class="form-control"><br>
-                        <textarea v-model="articleContent" placeholder="Content" rows="10px" cols="30px" class="form-control"></textarea><br>
-                        <br><br>
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
+            <div class="col-sm-9">
+                <all-articles :articles="articles" :user="currentUser" v-if="seenList" @get-one-article="getOneArticle" @delete-one-article="deleteArticle"></all-articles>
+                <update-article v-if="seenUpdate" :update-title="updateTitle" :update-content="updateContent" @updated="updateArticle"></update-article>
+                <add-article v-if="seenAdd" @add-new-article="addArticle"></add-article>
             </div>
         </div>
     </div>
+    <script src="/vueWysiwyg.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+    <script src="./js//components/sign-in.js"></script>
+    <script src="./js/components/sign-up.js"></script>
+    <script src="./js/components/side-bar.js"></script>
+    <script src="./js/components/nav-bar.js"></script>
+    <script src="./js/components/all-articles.js"></script>
+    <script src="./js/components/update-article.js"></script>
+    <script src="./js/components/add-article.js"></script>
     <script src="./js/main.js"></script>
 </body>
 <footer>

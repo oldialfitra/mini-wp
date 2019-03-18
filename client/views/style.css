@@ -24,7 +24,7 @@ i {
 }
 
 .navbar {
-    min-width: 101.62%;
+    min-width: 102.66%;
     max-width: 101.62%;
 }
 
@@ -50,19 +50,19 @@ a:focus {
 }
 
 #sidebar {
-    position: fixed;
     background: #7D83B0;
     color: white;
     transition: all 0.3s;
-    min-width: 300px;
+    min-width: auto;
     max-width: 300px;
-    min-height: 90.43%;
+    min-height: auto;
     left: 0;
 }
 
 #sidebar .sidebar-search {
     padding: 20px;
-    background: #7D83B0;
+    /* background: #7D83B0; */
+    border: black;
 }
 
 #sidebar ul li a {
@@ -72,8 +72,8 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: white;
+    color: black;
+    background-color: #3ab3e5;
 }
 
 .wrapper {
@@ -87,7 +87,8 @@ a:focus {
 }
 
 .list {
-    margin: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .add {

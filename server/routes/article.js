@@ -1,7 +1,11 @@
 const router = require('express').Router(),
-    controllerArticle = require('../controllers/article')
+    controllerArticle = require('../controllers/article'),
+    authentication = require('../middlewares/authentication'),
+    image = require('../helpers/images')
 
-router.post('/', controllerArticle.addArticle)
+router.use('', authentication)
+
+router.post('/', image.multer.single('image'), image.sendUploadToGCS, controllerArticle.addArticle)
 
 router.get('/', controllerArticle.getArticle)
 
