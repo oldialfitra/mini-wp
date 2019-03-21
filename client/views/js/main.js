@@ -300,6 +300,36 @@ let app = new Vue({
                 .catch((err) => {
                     console.log(err)
                 })
+        },
+        onSignIn(googleUser) {
+            console.log('masuk ke gogle')
+            console.log(googleUser)
+            var profile = googleUser.getBasicProfile();
+            const id_token = googleUser.getAuthResponse().id_token
+            console.log(id_token)
+
+            // idtoken: id_token }, function(data,status){
+            //     localStorage.setItem('accesToken', data.accesToken)
+
+            axios
+                .post('localhost:3000/googleSign', {
+                    idtoken: id_token
+                }, function(data, status) {
+                    console.log(data)
+                    localStorage.setItem('token', data.token)
+                })
+
+
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        },
+        signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function() {
+                console.log('User signed out.');
+            });
         }
     },
     destroyed() {
@@ -313,3 +343,33 @@ let app = new Vue({
             })
     }
 })
+
+// function onSignIn(googleUser) {
+//     var profile = googleUser.getBasicProfile();
+//     var id_token = googleUser.getAuthResponse().id_token
+//     console.log(id_token)
+
+//     // idtoken: id_token }, function(data,status){
+//     //     localStorage.setItem('accesToken', data.accesToken)
+
+//     axios
+//         .post('localhost:3000/googleSign', {
+//             idtoken: id_token
+//         }, function(data, status) {
+//             console.log(data)
+//             localStorage.setItem('token', data.token)
+//         })
+
+
+//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+//     console.log('Name: ' + profile.getName());
+//     console.log('Image URL: ' + profile.getImageUrl());
+//     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+// }
+
+// function signOut() {
+//     var auth2 = gapi.auth2.getAuthInstance();
+//     auth2.signOut().then(function() {
+//         console.log('User signed out.');
+//     });
+// }

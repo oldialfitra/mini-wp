@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mini WordPress</title>
+    <meta name="google-signin-client_id" content="88955055541-qm8ajo42t4u4ah9koan2h7ac3ba32fl6.apps.googleusercontent.com">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./style.css">
@@ -49,7 +50,7 @@
         </div> -->
         <div class="container col-sm-12">
             <div class="row">
-                <sign-in v-if='seenLogin' @user-login="login" @change-register="showRegisterUser"></sign-in>
+                <sign-in v-if='seenLogin' @user-login="login" @change-register="showRegisterUser" @google-login="onSignIn"></sign-in>
                 <sign-up v-if=seenRegister @user-register="register" @change-login="showLoginUser"></sign-up>
                 <nav-bar v-if="seenNavBar" @user-logout="logout"></nav-bar>
             </div>
